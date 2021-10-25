@@ -1,0 +1,9 @@
+node_modules/
+build/
+log/
+src/plugins/*
+package-lock.json
+.env
+!src/plugins/elira
+!src/plugins/post
+!src/plugins/user

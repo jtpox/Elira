@@ -1,0 +1,26 @@
+[
+    {
+        "name": "elira",
+        "enabled": true,
+        "routes": "routes",
+        "tests": "tests/index"
+    },
+    {
+        "name": "post",
+        "enabled": true,
+        "routes": "routes",
+        "database": {
+            "entity": "db/entity"
+        }
+    },
+    {
+        "name": "user",
+        "enabled": true,
+        "tests": "tests/index",
+        "routes": "routes",
+        "middleware": "middleware",
+        "database": {
+            "entity": "db/entity"
+        }
+    }
+]

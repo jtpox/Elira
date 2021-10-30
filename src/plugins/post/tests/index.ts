@@ -2,14 +2,14 @@ import { expect } from 'chai';
 
 import app from '../../../app';
 
-describe('Running test for User Plugin.', () => {
+describe('Running test for Post Plugin.', () => {
     /*
      * Returns error 400 as `id` param is not integer.
      */
-    it('GET `/user/:id` route with `string`.', () => {
+    it('GET `/post/:id` route with `string`.', () => {
         app.inject({
             method: 'GET',
-            url: '/user/impomu',
+            url: '/post/impomu',
         }, (err, response) => {
             expect(err).to.be.a('null');
             expect(response.statusCode).to.be.equal(400);
@@ -19,9 +19,9 @@ describe('Running test for User Plugin.', () => {
     });
 
     /*
-     * Returns error 404 as user does not exist.
+     * Returns error 404 as post does not exist.
      */
-    it('GET `/user/:id` route with `int`.', () => {
+    it('GET `/post/:id` route with `int`.', () => {
         app.inject({
             method: 'GET',
             url: '/user/69420',
@@ -36,10 +36,10 @@ describe('Running test for User Plugin.', () => {
     /*
      * Returns error 400 as there is no body in POST.
      */
-    it('POST `/user` route.', () => {
+    it('POST `/post` route.', () => {
         app.inject({
             method: 'POST',
-            url: '/user',
+            url: '/post',
         }, (err, response) => {
             expect(err).to.be.a('null');
             expect(response.statusCode).to.be.equal(400);

@@ -24,6 +24,7 @@ export default class User {
 
     @Column({
         nullable: true,
+        select: false, // userRepository.findOne({ where: { email }, select: ['id', 'password'] })
     })
     password: string;
 
@@ -36,6 +37,7 @@ export default class User {
     @Column({
         nullable: true,
         unique: true,
+        select: false,
     })
     social_id: string;
 
@@ -70,13 +72,14 @@ export default class User {
     posts: Post[];
 
     @BeforeInsert()
+    @BeforeUpdate()
     insertHashPassword() {
         this.password = bcrypt.hashSync(this.password, Number(process.env.SALT_ROUNDS));
     }
 
-    @BeforeUpdate()
+    /* @BeforeUpdate()
     updateHashPassword() {
         this.password = bcrypt.hashSync(this.password, Number(process.env.SALT_ROUNDS));
-    }
+    } */
 
 }

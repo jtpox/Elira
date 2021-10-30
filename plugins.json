@@ -8,6 +8,7 @@
     {
         "name": "post",
         "enabled": true,
+        "tests": "tests/index",
         "routes": "routes",
         "database": {
             "entity": "db/entity"

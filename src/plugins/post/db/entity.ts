@@ -1,5 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, BeforeInsert, BeforeUpdate, AfterLoad } from 'typeorm';
+
+import { validateOrReject } from 'class-validator';
+
 import User from '../../user/db/entity';
+
+import { validateJSON } from '../functions';
 
 @Entity()
 export default class Post {
@@ -19,7 +24,8 @@ export default class Post {
 
     @Column({
         type: 'int',
-        nullable: true,
+        nullable: false,
+        default: 0,
     })
     parent: number;
 
@@ -44,5 +50,22 @@ export default class Post {
     updated_at: Date;
 
     @ManyToOne(type => User, user => user.posts)
-    author: User;
+    author: number;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    checkJSON() {
+        if (!validateJSON(this.content)) {
+            this.content = JSON.stringify({
+                content: this.content,
+            });
+        }
+        // await validateOrReject(validateJSONPromise(this.content));
+        
+    }
+
+    @AfterLoad()
+    parseJSON() {
+        this.content = JSON.parse(this.content);
+    }
 }

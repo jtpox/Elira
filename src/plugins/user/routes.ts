@@ -2,7 +2,7 @@ import { FastifyInstance, RouteShorthandOptions, FastifyRequest, FastifyReply, R
 
 import User from './db/entity';
 
-interface UserBody extends RequestGenericInterface {
+interface PostUserBody extends RequestGenericInterface {
     Body: {
         username: string,
         password: string,
@@ -10,12 +10,47 @@ interface UserBody extends RequestGenericInterface {
     }
 }
 
-export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, done: any) {
-    fastify.get('/', async (req: FastifyRequest, res: FastifyReply) => {
-        return 'pong';
-    });
+interface GetUserParams extends RequestGenericInterface {
+    Params: {
+        id: number,
+    }
+}
 
-    fastify.post<UserBody>(
+export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, done: any) {
+    fastify.get<GetUserParams>(
+        '/:id',
+        {
+            schema: {
+                params: {
+                    id: { type: 'integer' }
+                }
+            }
+        },
+        async (req, res) => {
+            try {
+                const { id } = req.params;
+                const user = await fastify.orm
+                    .getRepository(User)
+                    .findOne({ where: { id } });
+
+                if (!user) {
+                    throw new Error('User does not exist.');
+                }
+
+                res.code(200)
+                return user;
+            } catch (err) {
+                res.code(404);
+                return {
+                    statusCode: 404,
+                    error: 'Not Found',
+                    message: `${err}`,
+                };
+            }
+        }
+    );
+
+    fastify.post<PostUserBody>(
         '/',
         {
             schema: {

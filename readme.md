@@ -58,4 +58,4 @@ export default (fastify: FastifyInstance) => [
 ## To-do
 - ~~Global plugin middlewares.~~
 - Proper routes for post and user plugins.
-- Add entity [listeners and subscribers](https://typeorm.io/#/listeners-and-subscribers) to plugin models.
+- ~~Add entity [listeners and subscribers](https://typeorm.io/#/listeners-and-subscribers) to plugin models.~~

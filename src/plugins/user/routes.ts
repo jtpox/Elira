@@ -74,8 +74,11 @@ export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, d
                 user.password = req.body.password;
                 user.email = req.body.email;
 
-                let userRepository = fastify.orm.getRepository(User);
-                await userRepository.save(user);
+                const userRepository = await fastify.orm
+                    .getRepository(User)
+                    .save(user);
+                // await userRepository.save(user);
+                console.log(userRepository);
 
                 res.code(201);
                 return {

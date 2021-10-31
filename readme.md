@@ -32,6 +32,10 @@ Details for the plugin has to be put into the `plugins.json` file.
 
     "middleware": "<OPTIONAL> Name of middleware file (without the .ts extension)",
 
+    "register": "<OPTIONAL> Name of register file (without the .ts extension)",
+
+    "decorate": "<OPTIONAL> Name of decorate file (without the .ts extension)",
+
     "routes": "<OPTIONAL> Name of the route file (without the .ts extension)",
 
     "tests": "<OPTIONAL> Name of the test file (without the .ts extension)",
@@ -51,6 +55,30 @@ export default (fastify: FastifyInstance) => [
     async (request: FastifyRequest, reply: FastifyReply) => {
         // Placeholder here.
         // done(); only on non-async functions
+    },
+];
+```
+
+## Registers
+Registers are used to include Fastify plugins. Has to be in an array, even if there is just one.
+```
+export default (fastify: FastifyInstance) => [
+    {
+        module: require('fastify-jwt'),
+        options: {
+            secret: process.env.JWT_SECRET,
+        }
+    },
+];
+```
+
+## Decorators
+Decorators uses [Fastify Decorators](https://www.fastify.io/docs/latest/Decorators/). Has to be in an array, even if there is just one.
+```
+export default (fastify: FastifyInstance) => [
+    {
+        name: 'foo',
+        module: async (request: FastifyRequest, reply: FastifyReply) => 'bar',
     },
 ];
 ```

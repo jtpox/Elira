@@ -16,6 +16,7 @@
         "name": "session",
         "enabled": true,
         "routes": "routes",
+        "tests": "tests/index",
         "database": {
             "entity": "db/entity"
         }

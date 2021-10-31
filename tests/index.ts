@@ -14,6 +14,6 @@ const enabledPlugins = plugins.filter((plugin: pluginType) => plugin.hasOwnPrope
  * Adding app.close() into teardown gives all requests 503 error.
  */
 enabledPlugins.forEach(plugin => {
-    console.log(`../src/plugins/${plugin.name}/${plugin.tests}`);
+    // console.log(`../src/plugins/${plugin.name}/${plugin.tests}`);
     require(`../src/plugins/${plugin.name}/${plugin.tests}`);
 });

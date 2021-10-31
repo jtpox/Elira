@@ -3,12 +3,18 @@
         "name": "elira",
         "enabled": true,
         "routes": "routes",
+        "middleware": "middleware",
         "tests": "tests/index"
     },
     {
-        "name": "post",
+        "name": "auth",
         "enabled": true,
-        "tests": "tests/index",
+        "register": "register",
+        "decorate": "guards"
+    },
+    {
+        "name": "session",
+        "enabled": true,
         "routes": "routes",
         "database": {
             "entity": "db/entity"
@@ -19,7 +25,15 @@
         "enabled": true,
         "tests": "tests/index",
         "routes": "routes",
-        "middleware": "middleware",
+        "database": {
+            "entity": "db/entity"
+        }
+    },
+    {
+        "name": "post",
+        "enabled": true,
+        "tests": "tests/index",
+        "routes": "routes",
         "database": {
             "entity": "db/entity"
         }

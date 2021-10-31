@@ -4,6 +4,8 @@ import bcrypt from 'bcrypt';
 
 import Post from '../../post/db/entity';
 
+import Session from '../../session/db/entity';
+
 enum UserRole {
     DISABLED = 'disabled',
     REGULAR = 'regular',
@@ -71,10 +73,13 @@ export default class User {
     @OneToMany(type => Post, post => post.author)
     posts: Post[];
 
+    @OneToMany(type => Session, session => session.author)
+    session: Session[];
+
     @BeforeInsert()
     @BeforeUpdate()
-    insertHashPassword() {
-        this.password = bcrypt.hashSync(this.password, Number(process.env.SALT_ROUNDS));
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password, Number(process.env.SALT_ROUNDS));
     }
 
     /* @BeforeUpdate()

@@ -9,4 +9,6 @@ export default interface Plugin {
     middleware?: string,
     database?: databaseObj,
     tests?: string,
+    register?: string,
+    decorate?: string,
 }

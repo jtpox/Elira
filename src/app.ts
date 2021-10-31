@@ -8,6 +8,10 @@ import { Server, IncomingMessage, ServerResponse } from 'http';
 
 import getEntities from './env/database';
 
+import registers from './env/registers';
+
+import decorates from './env/decorates';
+
 import hooks from './env/hooks';
 
 import routes from './env/routes';
@@ -35,6 +39,8 @@ server.register(require('fastify-typeorm-plugin'), {
     entities: getEntities(),
 });
 
+registers(server);
+decorates(server);
 hooks(server);
 routes(server);
 

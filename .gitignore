@@ -7,3 +7,5 @@ package-lock.json
 !src/plugins/elira
 !src/plugins/post
 !src/plugins/user
+!src/plugins/auth
+!src/plugins/session

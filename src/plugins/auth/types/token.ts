@@ -1,7 +1,7 @@
-import userType from '../../../types/user';
+import userType from '../../user/types/user';
 
 export default interface tokenType {
     session_id: string,
     token: string,
-    user: userType,
+    details: userType,
 }

@@ -6,12 +6,7 @@ import Post from '../../post/db/entity';
 
 import Session from '../../session/db/entity';
 
-enum UserRole {
-    DISABLED = 'disabled',
-    REGULAR = 'regular',
-    MODERATOR = 'moderator',
-    ADMIN = 'admin',
-}
+import { UserRole } from '../enums';
 
 @Entity()
 export default class User {

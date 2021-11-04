@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 
 import User from './entity';
 
+import { UserRole } from '../enums';
 @EntityRepository(User)
 export default class UserRepository extends AbstractRepository<User> {
   public async findByEmail(email: string, includePassword: boolean = false): Promise<User | undefined> {
@@ -13,7 +14,8 @@ export default class UserRepository extends AbstractRepository<User> {
             'id',
             'username',
             'email',
-            'password'
+            'password',
+            'privilege',
         ] })
         : repository.findOne({ where: { email } });
   }

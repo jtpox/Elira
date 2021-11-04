@@ -19,7 +19,10 @@ export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, d
         {
             preHandler: fastify.auth([
                 fastify.isAuthenticated,
-            ]),
+                fastify.isAdmin,
+            ], {
+                relation: 'and',
+            }),
         },
         async (req: FastifyRequest, res: FastifyReply) => {
             return {
@@ -62,10 +65,11 @@ export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, d
                 const jwt = fastify.jwt.sign({
                     session_id: session.session_id,
                     token,
-                    user: {
+                    details: {
                         id: user.id,
                         email: user.email,
                         username: user.username,
+                        privilege: user.privilege,
                     }
                 });
 

@@ -10,7 +10,6 @@ interface PostContentBody extends RequestGenericInterface {
         content: string,
         parent?: number,
         type: string,
-        author: number,
     }
 }
 
@@ -64,21 +63,22 @@ export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, d
             schema: {
                 body: {
                     type: 'object',
-                    required: ['title', 'content', 'type', 'author'],
+                    required: ['title', 'content', 'type'],
                     properties: {
                         title: { type: 'string' },
                         content: { type: 'string' },
                         parent: { type: 'integer' },
                         type: { type: 'string' },
-                        author: { type: 'integer' },
                     },
                 }
-            }
+            },
+            preHandler: fastify.auth([
+                fastify.isAuthenticated
+            ]),
         },
         async (req, res) => {
-            console.log(req.body.parent);
             try {
-                const { title, content, type, author } = req.body;
+                const { title, content, type } = req.body;
                 const parent = (req.body.parent)? req.body.parent : 0;
 
                 // const user = await fastify.orm.getRepository(User).findOne({ id: author });
@@ -87,12 +87,19 @@ export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, d
                 post.title = title;
                 post.content = content;
                 post.type = type;
-                post.author = author;
+                post.author = req.user.details.id;
                 post.parent = parent;
 
                 const postRepository = fastify.orm.getRepository(Post);
                 const savedPost = await postRepository.save(post);
-                console.log(savedPost);
+                return {
+                    id: savedPost.id,
+                    title: savedPost.title,
+                    content: JSON.parse(savedPost.content),
+                    type: savedPost.type,
+                    created_at: savedPost.created_at,
+                    updated_at: savedPost.updated_at,
+                };
             } catch (err) {
                 res.code(409);
                 return {

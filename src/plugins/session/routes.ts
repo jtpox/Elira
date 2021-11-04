@@ -18,11 +18,8 @@ export default function(fastify: FastifyInstance, opts: RouteShorthandOptions, d
         '/',
         {
             preHandler: fastify.auth([
-                fastify.isAuthenticated,
-                fastify.isAdmin,
-            ], {
-                relation: 'and',
-            }),
+                fastify.isAuthenticated
+            ]),
         },
         async (req: FastifyRequest, res: FastifyReply) => {
             return {

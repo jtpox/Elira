@@ -25,7 +25,7 @@ Returns:
 ```
 
 ### POST /post
-Creates a new post.
+Creates a new post. User has to be logged in to use this route.
 
 Body:
 ```
@@ -34,6 +34,5 @@ Body:
     content: string,
     parent: number,
     type: string,
-    author: number,
 }
 ```
